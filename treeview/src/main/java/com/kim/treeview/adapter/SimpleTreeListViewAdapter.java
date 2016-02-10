@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.kim.treeview.R;
 import com.kim.treeview.utils.Node;
+import com.kim.treeview.utils.TreeHelper;
 import com.kim.treeview.utils.TreeListViewAdapter;
 
 import java.util.List;
@@ -44,6 +45,22 @@ public class SimpleTreeListViewAdapter<T> extends TreeListViewAdapter<T> {
 
         holder.text.setText(Node.getName());
         return convertView;
+    }
+
+    public void addExtraNode(int position, String name) {
+        Node node = visibleNodes.get(position);
+        int indexOf = allNodes.indexOf(node);
+
+        Node extraNode = new Node(-1, node.getId(), name);
+        extraNode.setParent(node);
+        node.getChildren().add(extraNode);
+        if (!node.isExpand()) {
+            node.setExpand(true);
+        }
+        allNodes.add(indexOf + 1, extraNode);
+
+        visibleNodes = TreeHelper.filterVisibleNodes(allNodes);
+        notifyDataSetChanged();
     }
 
     private class ViewHolder {

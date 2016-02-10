@@ -1,7 +1,13 @@
 package com.kim.treeview;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatSpinner;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -40,6 +46,21 @@ public class MainActivity extends AppCompatActivity {
                 if (node.isLeaf()) {
                     Toast.makeText(MainActivity.this, "Click:" + node.getName(), Toast.LENGTH_SHORT).show();
                 }
+            }
+        });
+
+        tree.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
+                //官方推荐DialogFragment
+                final EditText editText = new EditText(MainActivity.this);
+                new AlertDialog.Builder(MainActivity.this).setTitle("Add Node").setView(editText).setPositiveButton("Sure", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        adapter.addExtraNode(position,editText.getText().toString().trim());
+                    }
+                }).setNegativeButton("Cancel", null).show();
+                return false;
             }
         });
     }
