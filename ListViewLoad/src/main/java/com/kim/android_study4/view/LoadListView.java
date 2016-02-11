@@ -74,7 +74,7 @@ public class LoadListView extends ListView implements AbsListView.OnScrollListen
         footer.findViewById(R.id.load_layout).setVisibility(GONE);
     }
 
-    public void setInterface(LoadListener loadListener) {
+    public void setLoadListener(LoadListener loadListener) {
         this.loadListener = loadListener;
     }
 

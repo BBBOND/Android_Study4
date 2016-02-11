@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity implements LoadListView.Load
         setContentView(R.layout.activity_main);
 
         listView = (LoadListView) findViewById(R.id.listView);
-        listView.setInterface(this);
+        listView.setLoadListener(this);
 
         init();
     }
