@@ -10,6 +10,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/ListViewLoad" />
+            <option value="$PROJECT_DIR$/flowlayout" />
             <option value="$PROJECT_DIR$/treeview" />
           </set>
         </option>
@@ -17,6 +18,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/ListViewLoad" />
+            <option value="$PROJECT_DIR$/flowlayout" />
             <option value="$PROJECT_DIR$/treeview" />
           </set>
         </option>
