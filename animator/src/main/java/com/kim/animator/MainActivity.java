@@ -1,5 +1,7 @@
 package com.kim.animator;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
@@ -53,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
         //translationX、translationY 偏移量X、Y
         //X、Y  最终所到达的绝对值
         //rotation 旋转角度
+        //alpha 透明度
         ObjectAnimator.ofFloat(imageView, "rotation", 0f, 360f).setDuration(2000).start();
         ObjectAnimator.ofFloat(imageView, "translationX", 0f, 200f).setDuration(2000).start();
         ObjectAnimator.ofFloat(imageView, "translationY", 0f, 200f).setDuration(2000).start();
@@ -89,9 +92,43 @@ public class MainActivity extends AppCompatActivity {
         ObjectAnimator animator2 = ObjectAnimator.ofFloat(imageView, "translationX", 0f, 200f);
         ObjectAnimator animator3 = ObjectAnimator.ofFloat(imageView, "translationY", 0f, 200f);
         AnimatorSet set = new AnimatorSet();
-        set.play(animator2).with(animator3).before(animator1);
+        set.play(animator2).with(animator3).after(animator1);
 //        set.playTogether(animator1, animator2, animator3);
 //        set.playSequentially(animator1, animator2, animator3);
         set.setDuration(2000).start();
+    }
+
+    public void moveListener(View view) {
+        Toast.makeText(this, "Starting...", Toast.LENGTH_SHORT).show();
+        ObjectAnimator animator = ObjectAnimator.ofFloat(imageView, "alpha", 0f, 1f);
+        animator.setDuration(10000);
+        animator.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                Toast.makeText(MainActivity.this, "End...", Toast.LENGTH_SHORT).show();
+            }
+        });
+//        animator.addListener(new Animator.AnimatorListener() {
+//            @Override
+//            public void onAnimationStart(Animator animation) {
+//                Toast.makeText(MainActivity.this, "Start...", Toast.LENGTH_SHORT).show();
+//            }
+//
+//            @Override
+//            public void onAnimationEnd(Animator animation) {
+//                Toast.makeText(MainActivity.this, "End...", Toast.LENGTH_SHORT).show();
+//            }
+//
+//            @Override
+//            public void onAnimationCancel(Animator animation) {
+//                Toast.makeText(MainActivity.this, "Cancel...", Toast.LENGTH_SHORT).show();
+//            }
+//
+//            @Override
+//            public void onAnimationRepeat(Animator animation) {
+//                Toast.makeText(MainActivity.this, "Repeat...", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+        animator.start();
     }
 }
