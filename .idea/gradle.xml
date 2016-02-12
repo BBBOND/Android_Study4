@@ -10,6 +10,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/ListViewLoad" />
+            <option value="$PROJECT_DIR$/animator" />
             <option value="$PROJECT_DIR$/flowlayout" />
             <option value="$PROJECT_DIR$/myviewpager" />
             <option value="$PROJECT_DIR$/treeview" />
@@ -19,6 +20,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/ListViewLoad" />
+            <option value="$PROJECT_DIR$/animator" />
             <option value="$PROJECT_DIR$/flowlayout" />
             <option value="$PROJECT_DIR$/myviewpager" />
             <option value="$PROJECT_DIR$/treeview" />
