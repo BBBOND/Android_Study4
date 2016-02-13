@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/iv_camera"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/composer_camera" />
+
+    <ImageView
+        android:id="@+id/iv_music"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/composer_music" />
+
+    <ImageView
+        android:id="@+id/iv_place"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/composer_place" />
+
+    <ImageView
+        android:id="@+id/iv_sleep"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/composer_sleep" />
+
+    <ImageView
+        android:id="@+id/iv_thought"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/composer_thought" />
+
+
+    <ImageView
+        android:id="@+id/iv_with"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/composer_with" />
+
+    <ImageView
+        android:id="@+id/iv_normal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="click"
+        android:background="@drawable/button_normal"
+        android:scaleType="center"
+        android:src="@drawable/plus_normal" />
+
+</RelativeLayout>

@@ -1,1 +1,1 @@
-include ':ListViewLoad', ':treeview', ':flowlayout', ':myviewpager', ':animator'
+include ':ListViewLoad', ':treeview', ':flowlayout', ':myviewpager', ':animator', ':floatmenu'

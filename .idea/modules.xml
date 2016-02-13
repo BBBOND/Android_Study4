@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/Android_Study4.iml" filepath="$PROJECT_DIR$/Android_Study4.iml" />
       <module fileurl="file://$PROJECT_DIR$/ListViewLoad/ListViewLoad.iml" filepath="$PROJECT_DIR$/ListViewLoad/ListViewLoad.iml" />
       <module fileurl="file://$PROJECT_DIR$/animator/animator.iml" filepath="$PROJECT_DIR$/animator/animator.iml" />
+      <module fileurl="file://$PROJECT_DIR$/floatmenu/floatmenu.iml" filepath="$PROJECT_DIR$/floatmenu/floatmenu.iml" />
       <module fileurl="file://$PROJECT_DIR$/flowlayout/flowlayout.iml" filepath="$PROJECT_DIR$/flowlayout/flowlayout.iml" />
       <module fileurl="file://$PROJECT_DIR$/myviewpager/myviewpager.iml" filepath="$PROJECT_DIR$/myviewpager/myviewpager.iml" />
       <module fileurl="file://$PROJECT_DIR$/treeview/treeview.iml" filepath="$PROJECT_DIR$/treeview/treeview.iml" />
