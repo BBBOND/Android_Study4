@@ -4,49 +4,58 @@
     android:layout_height="match_parent">
 
     <ImageView
-        android:id="@+id/iv_camera"
+        android:id="@+id/iv_h"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/composer_camera" />
+        android:padding="5dp"
+        android:src="@drawable/h" />
 
     <ImageView
-        android:id="@+id/iv_music"
+        android:id="@+id/iv_g"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/composer_music" />
+        android:padding="5dp"
+        android:src="@drawable/g" />
 
     <ImageView
-        android:id="@+id/iv_place"
+        android:id="@+id/iv_f"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/composer_place" />
+        android:padding="5dp"
+        android:src="@drawable/f" />
 
     <ImageView
-        android:id="@+id/iv_sleep"
+        android:id="@+id/iv_e"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/composer_sleep" />
+        android:padding="5dp"
+        android:src="@drawable/e" />
 
     <ImageView
-        android:id="@+id/iv_thought"
+        android:id="@+id/iv_d"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/composer_thought" />
+        android:padding="5dp"
+        android:src="@drawable/d" />
 
 
     <ImageView
-        android:id="@+id/iv_with"
+        android:id="@+id/iv_c"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/composer_with" />
+        android:padding="5dp"
+        android:src="@drawable/c" />
 
     <ImageView
-        android:id="@+id/iv_normal"
+        android:id="@+id/iv_b"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="click"
-        android:background="@drawable/button_normal"
-        android:scaleType="center"
-        android:src="@drawable/plus_normal" />
+        android:padding="5dp"
+        android:src="@drawable/b" />
 
+    <ImageView
+        android:id="@+id/iv_a"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/a" />
 </RelativeLayout>
