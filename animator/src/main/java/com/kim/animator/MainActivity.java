@@ -136,6 +136,11 @@ public class MainActivity extends AppCompatActivity {
         animator.start();
     }
 
+    /**
+     * ValueAnimator自定义动画
+     *
+     * @param view
+     */
     public void valueAnimator(View view) {
         final Button button = (Button) view;
         ValueAnimator valueAnimator = ValueAnimator.ofFloat(0, 100f);

@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.animation.BounceInterpolator;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,18 +40,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startAnim();
                 break;
             case R.id.iv_b:
-                break;
             case R.id.iv_c:
-                break;
             case R.id.iv_d:
-                break;
             case R.id.iv_e:
-                break;
             case R.id.iv_f:
-                break;
             case R.id.iv_g:
-                break;
             case R.id.iv_h:
+                Toast.makeText(MainActivity.this, "Clicked", Toast.LENGTH_SHORT).show();
                 break;
         }
     }
@@ -58,7 +54,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void startAnim() {
         for (int i = 1; i < ids.length; i++) {
             ObjectAnimator animator = ObjectAnimator.ofFloat(imageViews.get(i),
-                    "translationY", isOpen ? 85f * i : 0f, isOpen ? 0f : 85f * i);
+                    "translationY", isOpen ? 180f * i : 0f, isOpen ? 0f : 180f * i);
             animator.setDuration(500);
             //差值器，设置运动的速度
             //Bounce、Accelerate、Decelerate、Accelerate/Decelerate、Anticipate、OverShoot、Anticipate/OverShoot
