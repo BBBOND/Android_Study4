@@ -58,11 +58,18 @@
                 android:text="AnimatorSet_Move" />
 
             <Button
-                android:id="@+id/btn_MoveListener"
+                android:id="@+id/btn_moveListener"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:onClick="moveListener"
                 android:text="Move_Listener" />
+
+            <Button
+                android:id="@+id/btn_valueAnimator"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="valueAnimator"
+                android:text="ValueAnimator" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

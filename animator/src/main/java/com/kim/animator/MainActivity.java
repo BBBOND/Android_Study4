@@ -5,10 +5,14 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
+import android.animation.TypeEvaluator;
+import android.animation.ValueAnimator;
+import android.graphics.PointF;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.animation.TranslateAnimation;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -129,6 +133,41 @@ public class MainActivity extends AppCompatActivity {
 //                Toast.makeText(MainActivity.this, "Repeat...", Toast.LENGTH_SHORT).show();
 //            }
 //        });
+        animator.start();
+    }
+
+    public void valueAnimator(View view) {
+        final Button button = (Button) view;
+        ValueAnimator valueAnimator = ValueAnimator.ofFloat(0, 100f);
+        valueAnimator.setDuration(10000);
+        valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                Float value = (Float) animation.getAnimatedValue();
+                button.setText(String.format("%.2f", value));
+            }
+        });
+        valueAnimator.start();
+
+        PointF startPoint = new PointF(0, 0);
+        PointF endPoint = new PointF(200f, 200f);
+        ValueAnimator animator = ValueAnimator.ofObject(new TypeEvaluator<PointF>() {
+            @Override
+            public PointF evaluate(float fraction, PointF startValue, PointF endValue) {
+                PointF point = new PointF();
+                point.set((endValue.x - startValue.x) * fraction, (endValue.y - startValue.y) * fraction);
+                return point;
+            }
+        }, startPoint, endPoint);
+        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                PointF point = (PointF) animation.getAnimatedValue();
+                imageView.setX(point.x);
+                imageView.setY(point.y);
+            }
+        });
+        animator.setDuration(2000);
         animator.start();
     }
 }
