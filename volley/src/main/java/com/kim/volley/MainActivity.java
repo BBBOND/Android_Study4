@@ -101,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
         }, 500, 500, Bitmap.Config.RGB_565, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                iv_img.setImageResource(R.mipmap.ic_launcher);
+                iv_img.setImageResource(R.drawable.ic_launcher);
             }
         });
         request.setTag("initView");
