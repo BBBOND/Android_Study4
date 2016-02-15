@@ -1,19 +1,25 @@
 package com.kim.volley;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.webkit.JsResult;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.StringRequest;
 
 import org.json.JSONObject;
@@ -28,9 +34,21 @@ import java.util.Map;
  * 3. Volley与Activity生命周期的联动
  * 4. Volley的简单二次回调封装
  */
+
+/**
+ * ImageCache
+ * LruCache
+ * ImageLoader
+ * ImageRequest
+ * NetworkImageView
+ * ImageListener
+ */
 public class MainActivity extends AppCompatActivity {
 
     private WebView webView;
+
+    private ImageView iv_img;
+    private NetworkImageView networkImageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,10 +75,58 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        volleyGet();
+//        volleyGet();
 //        volleyPost();
 //        myVolleyGet();
 //        myVolleyPost();
+
+        iv_img = (ImageView) findViewById(R.id.iv_img);
+        networkImageView = (NetworkImageView) findViewById(R.id.networkImageView);
+
+//        initView1();
+//        initView2();
+        initView3();
+    }
+
+    /**
+     * ImageRequest
+     */
+    private void initView1() {
+        String url = "http://b.hiphotos.baidu.com/image/pic/item/fc1f4134970a304e9ce8639bd6c8a786c8175c8d.jpg";
+        ImageRequest request = new ImageRequest(url, new Response.Listener<Bitmap>() {
+            @Override
+            public void onResponse(Bitmap response) {
+                iv_img.setImageBitmap(response);
+            }
+        }, 500, 500, Bitmap.Config.RGB_565, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                iv_img.setImageResource(R.mipmap.ic_launcher);
+            }
+        });
+        request.setTag("initView");
+        MyApplication.getHttpQueues().add(request);
+    }
+
+    /**
+     * LruCache、ImageLoader
+     */
+    private void initView2() {
+        String url = "http://b.hiphotos.baidu.com/image/pic/item/fc1f4134970a304e9ce8639bd6c8a786c8175c8d.jpg";
+        ImageLoader loader = new ImageLoader(MyApplication.getHttpQueues(), new BitmapCache());
+        ImageLoader.ImageListener listener = ImageLoader.getImageListener(iv_img, R.drawable.ic_launcher, R.drawable.ic_launcher);
+        loader.get(url, listener);
+    }
+
+    /**
+     * networkImageView
+     */
+    private void initView3() {
+        String url = "http://b.hiphotos.baidu.com/image/pic/item/fc1f4134970a304e9ce8639bd6c8a786c8175c8d.jpg";
+        ImageLoader loader = new ImageLoader(MyApplication.getHttpQueues(), new BitmapCache());
+        networkImageView.setDefaultImageResId(R.drawable.ic_launcher);
+        networkImageView.setErrorImageResId(R.drawable.ic_launcher);
+        networkImageView.setImageUrl(url, loader);
     }
 
     private void volleyGet() {
@@ -159,10 +225,10 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onStop() {
-        MyApplication.getHttpQueues().cancelAll("volleyGet");
-        MyApplication.getHttpQueues().cancelAll("volleyPost");
-        MyApplication.getHttpQueues().cancelAll("myVolleyGet");
-        MyApplication.getHttpQueues().cancelAll("myVolleyPost");
+//        MyApplication.getHttpQueues().cancelAll("volleyGet");
+//        MyApplication.getHttpQueues().cancelAll("volleyPost");
+//        MyApplication.getHttpQueues().cancelAll("myVolleyGet");
+//        MyApplication.getHttpQueues().cancelAll("myVolleyPost");
         super.onStop();
     }
 }
