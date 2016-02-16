@@ -10,15 +10,12 @@ import android.view.Window;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
+ * 如QQ
  * Created by 伟阳 on 2016/2/15.
  */
 public class FragmentTabActivity extends FragmentActivity implements View.OnClickListener {
 
-    private List<View> views = new ArrayList<>();
     int[] imgsNormal = {
             R.drawable.tab_weixin_normal,
             R.drawable.tab_find_frd_normal,
@@ -55,8 +52,6 @@ public class FragmentTabActivity extends FragmentActivity implements View.OnClic
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_fragment);
-
-        findViewById(R.id.toFragmentTab).setVisibility(View.GONE);
 
         initView();
         initEvent();

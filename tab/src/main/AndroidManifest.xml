@@ -15,7 +15,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".PagerAdapterActivity" />
         <activity android:name=".FragmentTabActivity" />
+        <activity android:name=".FragmentPagerAdapterActivity" />
     </application>
 
 </manifest>
