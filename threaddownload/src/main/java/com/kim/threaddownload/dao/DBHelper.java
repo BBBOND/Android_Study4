@@ -21,7 +21,7 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String SQL_DROP = "drop table if exists thread_info";
     private static DBHelper dbHelper = null;
 
-    public DBHelper(Context context) {
+    private DBHelper(Context context) {
         super(context, DB_NAME, null, VERSION);
     }
 

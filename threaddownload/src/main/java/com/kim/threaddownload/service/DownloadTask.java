@@ -2,14 +2,12 @@ package com.kim.threaddownload.service;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.util.Log;
 
 import com.kim.threaddownload.dao.ThreadDAO;
 import com.kim.threaddownload.dao.ThreadDaoImpl;
 import com.kim.threaddownload.model.FileInfo;
 import com.kim.threaddownload.model.ThreadInfo;
-
 
 import java.io.File;
 import java.io.InputStream;
@@ -18,6 +16,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * Created by 伟阳 on 2016/2/17.
@@ -31,6 +31,12 @@ public class DownloadTask {
     public boolean isPause = false;
     private int threadCount = 1;  // 线程数量
     private List<DownloadThread> downloadThreadList = null; // 线程集合
+    // 带缓存的线程池（和系统支持的线程数量有关）
+    public static ExecutorService executorService = Executors.newCachedThreadPool();
+    // 固定线程数的线程池 Executors.newFixedThreadPool(int);
+    // 可以周期性地执行线程池中的线程 Executors.newScheduledThreadPool();
+    // 只有单个线程可以工作 Executors.newSingleThreadExecutor();
+
 
     /**
      * @param context
@@ -60,7 +66,6 @@ public class DownloadTask {
                 if (threadCount - 1 == i) {
                     threadInfo.setEnd(fileInfo.getLength());
                 }
-
                 // 添加到线程集合中
                 threads.add(threadInfo);
                 threadDAO.insertThread(threadInfo);
@@ -71,7 +76,8 @@ public class DownloadTask {
         // 启动多个线程进行下载
         for (ThreadInfo info : threads) {
             DownloadThread thread = new DownloadThread(info);
-            thread.start();
+//            thread.start();
+            DownloadTask.executorService.execute(thread);
             // 添加到线程集合中
             downloadThreadList.add(thread);
         }
@@ -149,8 +155,6 @@ public class DownloadTask {
                     isFinished = true;
                     // 检查下载任务是否结束
                     checkAllThreadFinished();
-                    // 删除下载任务
-                    threadDAO.deleteThread(threadInfo.getUrl());
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -191,9 +195,7 @@ public class DownloadTask {
             threadDAO.deleteThread(fileInfo.getUrl());
             // 发送广播知道UI下载任务结束
             Intent intent = new Intent(DownloadService.ACTION_FINISHED);
-            Bundle bundle = new Bundle();
-            bundle.putSerializable("fileInfo", fileInfo);
-            intent.putExtra("fileInfo", bundle);
+            intent.putExtra("fileInfo", fileInfo);
             context.sendBroadcast(intent);
         }
     }

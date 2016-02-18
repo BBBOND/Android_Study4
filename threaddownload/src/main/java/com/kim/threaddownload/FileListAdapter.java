@@ -2,7 +2,6 @@ package com.kim.threaddownload;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,6 +46,7 @@ public class FileListAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder = null;
+        final FileInfo fileInfo = fileList.get(position);
         if (convertView == null) {
             convertView = LayoutInflater.from(context).inflate(R.layout.file_item, null);
             holder = new ViewHolder();
@@ -55,32 +55,32 @@ public class FileListAdapter extends BaseAdapter {
             holder.stop = (Button) convertView.findViewById(R.id.btn_stop);
             holder.progressBar = (ProgressBar) convertView.findViewById(R.id.pg_file);
             convertView.setTag(holder);
+            holder.fileName.setText(fileInfo.getName());
+            holder.progressBar.setMax(100);
+            holder.start.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, DownloadService.class);
+                    intent.setAction(DownloadService.ACTION_START);
+                    intent.putExtra("fileInfo", fileInfo);
+                    context.startService(intent);
+                }
+            });
+            holder.stop.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, DownloadService.class);
+                    intent.setAction(DownloadService.ACTION_STOP);
+                    intent.putExtra("fileInfo", fileInfo);
+                    context.startService(intent);
+                }
+            });
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        final FileInfo fileInfo = fileList.get(position);
-        holder.fileName.setText(fileInfo.getName());
-        holder.progressBar.setMax(100);
+
         holder.progressBar.setProgress(fileInfo.getFinished());
-        holder.start.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, DownloadService.class);
-                intent.setAction(DownloadService.ACTION_START);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("fileInfo", fileInfo);
-                intent.putExtra("fileInfo", bundle);
-                context.startService(intent);
-            }
-        });
-        holder.stop.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, DownloadService.class);
-                intent.setAction(DownloadService.ACTION_STOP);
-                context.startService(intent);
-            }
-        });
+
         return convertView;
     }
 

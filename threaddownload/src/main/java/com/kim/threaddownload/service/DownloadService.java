@@ -1,18 +1,13 @@
 package com.kim.threaddownload.service;
 
-import android.Manifest;
 import android.app.Service;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 
-import com.kim.threaddownload.MainActivity;
 import com.kim.threaddownload.model.FileInfo;
 
 import java.io.File;
@@ -40,13 +35,12 @@ public class DownloadService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         // 获取传过来的文件对象
-        Bundle bundle = intent.getBundleExtra("fileInfo");
-        FileInfo fileInfo = (FileInfo) bundle.getSerializable("fileInfo");
+        FileInfo fileInfo = (FileInfo) intent.getSerializableExtra("fileInfo");
         // 获得Activity传过来的参数
         if (ACTION_START.equals(intent.getAction())) {
             Log.i(TAG, "Start:" + fileInfo.toString());
             // 启动初始化线程
-            new InitThread(fileInfo).start();
+            DownloadTask.executorService.execute(new InitThread(fileInfo));
         } else if (ACTION_STOP.equals(intent.getAction())) {
             Log.i(TAG, "Stop:" + fileInfo.toString());
 
@@ -109,6 +103,7 @@ public class DownloadService extends Service {
 
                 // 在本地创建文件
                 File file = new File(dir, fileInfo.getName());
+                Log.d(TAG, "run: " + file.getPath());
                 raf = new RandomAccessFile(file, "rwd");
                 // 设置文件长度
                 raf.setLength(length);

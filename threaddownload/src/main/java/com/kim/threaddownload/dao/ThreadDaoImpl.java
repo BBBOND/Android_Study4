@@ -19,7 +19,7 @@ public class ThreadDaoImpl implements ThreadDAO {
     private DBHelper dbHelper;
 
     public ThreadDaoImpl(Context context) {
-        DBHelper.getInstance(context);
+        dbHelper = DBHelper.getInstance(context);
     }
 
     @Override
