@@ -1,6 +1,10 @@
 package com.kim.threaddownload.service;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Environment;
 import android.os.Handler;
@@ -8,6 +12,8 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.kim.threaddownload.MainActivity;
+import com.kim.threaddownload.R;
 import com.kim.threaddownload.model.FileInfo;
 
 import java.io.File;
@@ -15,8 +21,10 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Timer;
 
 /**
  * Created by 伟阳 on 2016/2/17.
@@ -31,23 +39,77 @@ public class DownloadService extends Service {
     public static final int MSG_INIT = 0;
     private String TAG = "DownloadService";
     private Map<Integer, DownloadTask> tasks = new LinkedHashMap<Integer, DownloadTask>();
+    private NotificationManager manager;
+    private Map<Integer, Notification.Builder> builders;
+    private Notification.Builder builder;
+    private Intent intent;
+    private PendingIntent contentIntent;
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        // 获取传过来的文件对象
-        FileInfo fileInfo = (FileInfo) intent.getSerializableExtra("fileInfo");
+        FileInfo fileInfo;
         // 获得Activity传过来的参数
         if (ACTION_START.equals(intent.getAction())) {
+            // 获取传过来的文件对象
+            fileInfo = (FileInfo) intent.getSerializableExtra("fileInfo");
             Log.i(TAG, "Start:" + fileInfo.toString());
             // 启动初始化线程
             DownloadTask.executorService.execute(new InitThread(fileInfo));
+            // 开启通知
+            if (builders.get(fileInfo.getId()) == null) {
+                builder = new Notification.Builder(DownloadService.this);
+                builder.setContentIntent(contentIntent);
+                builder.setSmallIcon(R.mipmap.ic_launcher);
+                builder.setContentTitle(fileInfo.getName());
+                builder.setTicker(fileInfo.getName() + "开始下载");
+                builder.setContentText("  已下载" + fileInfo.getFinished());
+                builder.setOngoing(true);
+                builders.put(fileInfo.getId(), builder);
+            } else {
+                builder = builders.get(fileInfo.getId());
+                builder.setTicker(fileInfo.getName() + "开始下载");
+                builder.setContentText("  已下载" + fileInfo.getFinished());
+                builder.setOngoing(true);
+                builders.put(fileInfo.getId(), builder);
+            }
+            manager.notify(fileInfo.getId(), builder.build());
         } else if (ACTION_STOP.equals(intent.getAction())) {
+            // 获取传过来的文件对象
+            fileInfo = (FileInfo) intent.getSerializableExtra("fileInfo");
             Log.i(TAG, "Stop:" + fileInfo.toString());
 
             // 从集合中取出下载任务
             DownloadTask task = tasks.get(fileInfo.getId());
             if (task != null) {
                 task.isPause = true;
+                if (builders.get(fileInfo.getId()) != null) {
+                    builder = builders.get(fileInfo.getId());
+                    builder.setTicker(fileInfo.getName() + "暂停下载");
+                    builder.setContentText("下载已暂停");
+                    builder.setOngoing(false);
+                    manager.notify(fileInfo.getId(), builder.build());
+                    builders.put(fileInfo.getId(), builder);
+                }
+            }
+        } else if (ACTION_UPDATE.equals(intent.getAction())) {
+            int finished = intent.getIntExtra("finished", 0);
+            int id = intent.getIntExtra("id", -1);
+            if (builders.get(id) != null) {
+                builder = builders.get(id);
+                builder.setTicker("开始下载");
+                builder.setContentText("  已下载" + finished);
+                builder.setOngoing(true);
+                manager.notify(id, builder.build());
+                builders.put(id, builder);
+            }
+        } else if (ACTION_FINISHED.equals(intent.getAction())) {
+            fileInfo = (FileInfo) intent.getSerializableExtra("fileInfo");
+            if (builders.get(fileInfo.getId()) != null) {
+                builder = builders.get(fileInfo.getId());
+                builder.setTicker(fileInfo.getName() + "下载完成");
+                builder.setContentText(fileInfo.getName() + "下载完成");
+                builder.setOngoing(false);
+                builders.remove(fileInfo.getId());
             }
         }
         return super.onStartCommand(intent, flags, startId);
@@ -124,6 +186,17 @@ public class DownloadService extends Service {
                 }
             }
         }
+    }
+
+
+    @Override
+    public void onCreate() {
+        manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        builders = new HashMap<>();
+        intent = new Intent(DownloadService.this, MainActivity.class);
+        contentIntent = PendingIntent.getActivity(DownloadService.this, 0, intent, 0);
+
+        super.onCreate();
     }
 
     @Nullable

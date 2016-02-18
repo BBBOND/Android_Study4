@@ -64,6 +64,7 @@ public class FileListAdapter extends BaseAdapter {
                     intent.setAction(DownloadService.ACTION_START);
                     intent.putExtra("fileInfo", fileInfo);
                     context.startService(intent);
+                    context.startService(intent);
                 }
             });
             holder.stop.setOnClickListener(new View.OnClickListener() {
@@ -72,6 +73,7 @@ public class FileListAdapter extends BaseAdapter {
                     Intent intent = new Intent(context, DownloadService.class);
                     intent.setAction(DownloadService.ACTION_STOP);
                     intent.putExtra("fileInfo", fileInfo);
+                    context.startService(intent);
                     context.startService(intent);
                 }
             });

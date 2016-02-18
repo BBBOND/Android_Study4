@@ -139,6 +139,7 @@ public class DownloadTask {
                             if (f > fileInfo.getFinished()) {
                                 intent.putExtra("finished", f);
                                 intent.putExtra("id", fileInfo.getId());
+                                context.startService(intent);
                                 context.sendBroadcast(intent);
                             }
                         }
@@ -196,6 +197,7 @@ public class DownloadTask {
             // 发送广播知道UI下载任务结束
             Intent intent = new Intent(DownloadService.ACTION_FINISHED);
             intent.putExtra("fileInfo", fileInfo);
+            context.startService(intent);
             context.sendBroadcast(intent);
         }
     }
