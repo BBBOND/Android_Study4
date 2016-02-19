@@ -10,7 +10,6 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/ListViewLoad" />
-            <option value="$PROJECT_DIR$/androidannotation" />
             <option value="$PROJECT_DIR$/animator" />
             <option value="$PROJECT_DIR$/floatmenu" />
             <option value="$PROJECT_DIR$/flowlayout" />
@@ -25,7 +24,6 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/ListViewLoad" />
-            <option value="$PROJECT_DIR$/androidannotation" />
             <option value="$PROJECT_DIR$/animator" />
             <option value="$PROJECT_DIR$/floatmenu" />
             <option value="$PROJECT_DIR$/flowlayout" />

@@ -1,1 +1,1 @@
-include ':ListViewLoad', ':treeview', ':flowlayout', ':myviewpager', ':animator', ':floatmenu', ':volley', ':tab', ':threaddownload', ':androidannotation'
+include ':ListViewLoad', ':treeview', ':flowlayout', ':myviewpager', ':animator', ':floatmenu', ':volley', ':tab', ':threaddownload'
