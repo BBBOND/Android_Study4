@@ -6,9 +6,12 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import org.androidannotations.annotations.EService;
+
 /**
  * Created by 伟阳 on 2016/2/19.
  */
+@EService
 public class MyService extends Service {
 
     @Override
