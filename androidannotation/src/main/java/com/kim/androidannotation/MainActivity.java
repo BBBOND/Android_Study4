@@ -19,6 +19,9 @@ import java.util.List;
 @EActivity(R.layout.activity_main)
 public class MainActivity extends AppCompatActivity {
 
+    public static final String NAME_KEY = "name_key";
+    public static final String AGE_KEY = "age_key";
+
     @ViewById(R.id.toSecond)
     Button toSecond;
     @ViewById(R.id.startService)
@@ -32,6 +35,8 @@ public class MainActivity extends AppCompatActivity {
     @Click(R.id.toSecond)
     public void toSecondActivity() {
         Intent intent = new Intent(MainActivity.this, SecondActivity_.class);
+        intent.putExtra(NAME_KEY, "kim");
+        intent.putExtra(AGE_KEY, "23");
         startActivity(intent);
     }
 
@@ -47,6 +52,12 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 0; i < list.size(); i++) {
             list.get(i).setText("text " + i);
         }
+    }
+
+    @Click({R.id.text1, R.id.text2})
+    public void changeText() {
+        list.get(0).setText("--" + list.get(0).getText().toString() + "--");
+        list.get(1).setText("--" + list.get(1).getText().toString() + "--");
     }
 
     @Override
