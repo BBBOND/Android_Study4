@@ -1,18 +1,23 @@
 package com.kim.androidannotation;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.kim.androidannotation.service.MyService_;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.LongClick;
 import org.androidannotations.annotations.ViewById;
 import org.androidannotations.annotations.ViewsById;
+import org.w3c.dom.ls.LSInput;
 
 import java.util.List;
 
@@ -54,9 +59,13 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    @Click({R.id.text1, R.id.text2})
+    @Click(R.id.text1)
     public void changeText() {
         list.get(0).setText("--" + list.get(0).getText().toString() + "--");
+    }
+
+    @LongClick(R.id.text2)
+    public void changeTextLong() {
         list.get(1).setText("--" + list.get(1).getText().toString() + "--");
     }
 
