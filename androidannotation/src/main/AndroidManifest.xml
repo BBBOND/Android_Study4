@@ -16,6 +16,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".SecondActivity_" />
+        <activity android:name=".ThirdActivity_" />
 
         <service android:name=".service.MyService_" />
     </application>
