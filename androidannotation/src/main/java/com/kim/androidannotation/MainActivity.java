@@ -17,6 +17,7 @@ import org.androidannotations.annotations.LongClick;
 import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
 import org.androidannotations.annotations.ViewsById;
+import org.androidannotations.annotations.res.DimensionRes;
 import org.androidannotations.annotations.res.StringRes;
 
 import java.util.List;
@@ -30,6 +31,9 @@ public class MainActivity extends AppCompatActivity {
 
     @StringRes(R.string.app_name)
     public String appName;
+
+    @DimensionRes(R.dimen.text_size)
+    public float textSize;
 
     @ViewById(R.id.toSecond)
     Button toSecond;
