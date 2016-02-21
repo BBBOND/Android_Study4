@@ -14,6 +14,7 @@ import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.LongClick;
+import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
 import org.androidannotations.annotations.ViewsById;
 
@@ -81,10 +82,17 @@ public class MainActivity extends AppCompatActivity {
         Log.i(TAG, "doSomething: thread id=" + Thread.currentThread().getId());
     }
 
+    @UiThread
+    public void updateUI() {
+        Log.i(TAG, "updateUI: thread id=" + Thread.currentThread().getId());
+        tvHello.setText("updateUI");
+    }
+
     @Click(R.id.doBackground)
     public void doBackground() {
         Log.i(TAG, "Click: thread id=" + Thread.currentThread().getId());
         doSomething();
+        updateUI();
     }
 
     @Override
