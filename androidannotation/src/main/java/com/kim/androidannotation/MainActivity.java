@@ -17,6 +17,7 @@ import org.androidannotations.annotations.LongClick;
 import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
 import org.androidannotations.annotations.ViewsById;
+import org.androidannotations.annotations.res.StringRes;
 
 import java.util.List;
 
@@ -26,6 +27,10 @@ public class MainActivity extends AppCompatActivity {
     public static final String NAME_KEY = "name_key";
     public static final String AGE_KEY = "age_key";
     public static final String TAG = "MainActivity";
+
+    @StringRes(R.string.app_name)
+    public String appName;
+
     @ViewById(R.id.toSecond)
     Button toSecond;
     @ViewById(R.id.startService)
