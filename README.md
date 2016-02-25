@@ -58,8 +58,8 @@
 ###[Push](https://github.com/BBBOND/Android_Study4/tree/master/push)
 * 说明：消息推送
 * 主流第三方库：
-    * 极光推送
-    * 个推
-    * 百度推送
-    * 小米推送
+    * [极光推送](https://www.jpush.cn/)
+    * [个推](https://http://www.getui.com/)
+    * [百度云推送](http://push.baidu.com/)
+    * [小米推送](http://dev.xiaomi.com/doc/?page_id=1670)
 * 自定义消息推送的对应[服务端PushServer](https://github.com/BBBOND/PushServer)
