@@ -42,6 +42,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".SocketClientActivity" />
 
         <!-- Rich push 核心功能 since 2.0.6-->
         <activity
