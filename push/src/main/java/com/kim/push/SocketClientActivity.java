@@ -1,12 +1,15 @@
 package com.kim.push;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import java.io.BufferedReader;
@@ -32,10 +35,21 @@ public class SocketClientActivity extends AppCompatActivity {
     private ToggleButton tBtnLink;
     private Button btnSend;
 
-    private Socket socket;
-    private BufferedWriter writer;
+    private Socket socket = null;
+    private BufferedWriter writer = null;
+    private BufferedReader reader = null;
 
     private ExecutorService executorService = Executors.newCachedThreadPool();
+
+    Handler handler = new Handler(new Handler.Callback() {
+        @Override
+        public boolean handleMessage(Message msg) {
+            if (msg.obj != null) {
+                Toast.makeText(SocketClientActivity.this, (String) msg.obj, Toast.LENGTH_SHORT).show();
+            }
+            return true;
+        }
+    });
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -70,17 +84,22 @@ public class SocketClientActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (tBtnLink.isChecked()) {
-                    try {
-                        writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
-                        writer.write(etText.getText().toString());
-                        writer.flush();
-                        Log.d(TAG, "发送成功");
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    } finally {
-                        stopSocket();
-                        startSocket();
-                    }
+                    executorService.execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                writer.write(etText.getText().toString());
+                                writer.newLine();
+                                writer.flush();
+                                Message message = handler.obtainMessage();
+                                message.obj = reader.readLine();
+                                message.sendToTarget();
+                                Log.d(TAG, "发送成功");
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
                 }
             }
         });
@@ -92,6 +111,8 @@ public class SocketClientActivity extends AppCompatActivity {
             public void run() {
                 try {
                     socket = new Socket(etIp.getText().toString(), 9090);
+                    writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+                    reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                     Log.d(TAG, "连接成功");
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -109,6 +130,10 @@ public class SocketClientActivity extends AppCompatActivity {
             if (writer != null) {
                 writer.close();
                 writer = null;
+            }
+            if (reader != null) {
+                reader.close();
+                reader = null;
             }
             Log.d(TAG, "断开成功");
         } catch (Exception e) {
