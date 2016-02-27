@@ -91,9 +91,6 @@ public class SocketClientActivity extends AppCompatActivity {
                                 writer.write(etText.getText().toString());
                                 writer.newLine();
                                 writer.flush();
-                                Message message = handler.obtainMessage();
-                                message.obj = reader.readLine();
-                                message.sendToTarget();
                                 Log.d(TAG, "发送成功");
                             } catch (Exception e) {
                                 e.printStackTrace();
@@ -113,6 +110,7 @@ public class SocketClientActivity extends AppCompatActivity {
                     socket = new Socket(etIp.getText().toString(), 9090);
                     writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
                     reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                    startServerListener(reader);
                     Log.d(TAG, "连接成功");
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -141,6 +139,24 @@ public class SocketClientActivity extends AppCompatActivity {
         }
     }
 
+    private void startServerListener(final BufferedReader bufferedReader) {
+        executorService.execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    String serverMsg;
+                    while ((serverMsg = bufferedReader.readLine()) != null) {
+                        Message message = handler.obtainMessage();
+                        message.obj = serverMsg;
+                        message.sendToTarget();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
     private void start() {
         //此为java控制台用法
 //        BufferedReader inputReader;
@@ -153,5 +169,13 @@ public class SocketClientActivity extends AppCompatActivity {
 //        } catch (Exception e) {
 //            e.printStackTrace();
 //        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        stopSocket();
+        if (!executorService.isShutdown())
+            executorService.shutdown();
     }
 }
