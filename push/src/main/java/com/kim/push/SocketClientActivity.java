@@ -39,7 +39,7 @@ public class SocketClientActivity extends AppCompatActivity {
     private BufferedWriter writer = null;
     private BufferedReader reader = null;
 
-    private ExecutorService executorService = Executors.newCachedThreadPool();
+    private ExecutorService executorService = null;
 
     Handler handler = new Handler(new Handler.Callback() {
         @Override
@@ -76,6 +76,7 @@ public class SocketClientActivity extends AppCompatActivity {
                 if (((ToggleButton) v).isChecked()) {
                     startSocket();
                 } else {
+                    stopServerListener();
                     stopSocket();
                 }
             }
@@ -103,6 +104,7 @@ public class SocketClientActivity extends AppCompatActivity {
     }
 
     private void startSocket() {
+        executorService = Executors.newCachedThreadPool();
         executorService.execute(new Runnable() {
             @Override
             public void run() {
@@ -157,6 +159,13 @@ public class SocketClientActivity extends AppCompatActivity {
         });
     }
 
+    private void stopServerListener() {
+        if (!executorService.isShutdown()) {
+            executorService.shutdownNow();
+            executorService = null;
+        }
+    }
+
     private void start() {
         //此为java控制台用法
 //        BufferedReader inputReader;
@@ -174,8 +183,7 @@ public class SocketClientActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        stopServerListener();
         stopSocket();
-        if (!executorService.isShutdown())
-            executorService.shutdown();
     }
 }
