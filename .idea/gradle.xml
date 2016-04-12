@@ -3,9 +3,8 @@
   <component name="GradleSettings">
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
-        <option name="distributionType" value="LOCAL" />
+        <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="gradleHome" value="D:\Android Studio\gradle\gradle-2.10" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
@@ -14,8 +13,10 @@
             <option value="$PROJECT_DIR$/animator" />
             <option value="$PROJECT_DIR$/floatmenu" />
             <option value="$PROJECT_DIR$/flowlayout" />
+            <option value="$PROJECT_DIR$/gaodemaptest" />
             <option value="$PROJECT_DIR$/myviewpager" />
             <option value="$PROJECT_DIR$/push" />
+            <option value="$PROJECT_DIR$/recyclerview" />
             <option value="$PROJECT_DIR$/tab" />
             <option value="$PROJECT_DIR$/threaddownload" />
             <option value="$PROJECT_DIR$/treeview" />
@@ -30,8 +31,10 @@
             <option value="$PROJECT_DIR$/animator" />
             <option value="$PROJECT_DIR$/floatmenu" />
             <option value="$PROJECT_DIR$/flowlayout" />
+            <option value="$PROJECT_DIR$/gaodemaptest" />
             <option value="$PROJECT_DIR$/myviewpager" />
             <option value="$PROJECT_DIR$/push" />
+            <option value="$PROJECT_DIR$/recyclerview" />
             <option value="$PROJECT_DIR$/tab" />
             <option value="$PROJECT_DIR$/threaddownload" />
             <option value="$PROJECT_DIR$/treeview" />

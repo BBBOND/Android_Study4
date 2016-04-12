@@ -14,13 +14,11 @@ import android.widget.ToggleButton;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadPoolExecutor;
 
 /**
  * 此部分与极光推送无关是自定义Socket连接
@@ -63,7 +61,7 @@ public class SocketClientActivity extends AppCompatActivity {
 
     private void init() {
         etIp = (EditText) findViewById(R.id.et_ip);
-        etIp.setText("127.0.0.1");
+        etIp.setText("10.0.0.2");
         etText = (EditText) findViewById(R.id.et_text);
         tBtnLink = (ToggleButton) findViewById(R.id.tbtn_link);
         btnSend = (Button) findViewById(R.id.btn_send);
@@ -166,24 +164,24 @@ public class SocketClientActivity extends AppCompatActivity {
         }
     }
 
-    private void start() {
-        //此为java控制台用法
-//        BufferedReader inputReader;
-//        try {
-//            inputReader = new BufferedReader(new InputStreamReader(System.in));
-//            String inputContent;
-//            while (!(inputContent = inputReader.readLine()).equals("bye")) {
-//                Log.i(TAG, "inputContent: " + inputContent);
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-    }
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
         stopServerListener();
         stopSocket();
+    }
+
+    private void start() {
+        //此为java控制台用法
+        BufferedReader inputReader;
+        try {
+            inputReader = new BufferedReader(new InputStreamReader(System.in));
+            String inputContent;
+            while (!(inputContent = inputReader.readLine()).equals("bye")) {
+                Log.i(TAG, "inputContent: " + inputContent);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
